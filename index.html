@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Westbrook Power Sports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #1a1e2a;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #b3e5fc; /* Light blue on hover */
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Full viewport height */
+            overflow: hidden;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-overlay h1 {
+            font-size: 48px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-overlay p {
+            font-size: 24px;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .services {
+            padding: 20px;
+            background: #f0f8ff; /* Light blue background color */
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #004c8c;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .services h2::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #ff5722;
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .service-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            flex: 1 1 calc(16.66% - 10px);
+            min-width: 150px;
+            max-width: 180px;
+            margin: 10px 0;
+        }
+
+        .service-card img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .service-card h3 {
+            margin: 10px 0;
+            font-size: 20px;
+        }
+
+        .service-card p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: #333;
+                display: none;
+                flex-direction: column;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .service-container {
+                justify-content: center;
+            }
+            .service-card {
+                flex: 1 1 45%;
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .service-card {
+                flex: 1 1 100%;
+            }
+        }
+
+        .call-now-button {
+            background-color: #ff5722;
+            color: white;
+            padding: 20px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .call-now-button:hover {
+            background-color: #737373;
+        }
+
+        .rentals {
+            padding: 20px 20px;
+            background: #ffffff;
+            width: 100%;
+        }
+
+        .rentals h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #004c8c;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .rentals h2::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #ff5722;
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .rental-description {
+            text-align: center;
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .rental-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            margin: 30px auto;
+            line-height: 1.6;
+            text-align: center;
+            padding-bottom: 25px;
+        }
+
+        .rental-card h3 {
+            font-size: 28px;
+            color: #004c8c;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .rental-pricing {
+            list-style: none;
+            padding: 0;
+            font-size: 20px;
+            color: #555;
+        }
+
+        .rental-pricing li {
+            margin-bottom: 15px;
+        }
+
+        .rental-pricing strong {
+            color: #000;
+        }
+
+        .rental-requirements {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            margin: 30px auto;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .rental-requirements h3 {
+            font-size: 28px;
+            color: #004c8c;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .rental-requirements ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+
+        .rental-requirements ul li {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .rental-requirements p {
+            font-size: 16px;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .faq-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-section h3 {
+            text-align: center;
+            font-size: 28px;
+            color: #004c8c;
+            margin-bottom: 20px;
+        }
+
+        .faq-item {
+            margin-bottom: 10px;
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            background-color: #004c8c;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question:hover {
+            background-color: #003366;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 15px;
+            background-color: #ffffff;
+            color: #333;
+            border-radius: 5px;
+            margin-top: 5px;
+            line-height: 1.6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+
+        .faq-item.open .arrow {
+            transform: rotate(180deg);
+        }
+        footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        margin-top: auto;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .social-media {
+        margin: 10px 0;
+    }
+
+    .social-link {
+        margin: 0 10px;
+        color: white;
+        text-decoration: none;
+    }
+
+    .social-link:hover {
+        text-decoration: underline;
+    }
+
+    .contact-info {
+        margin-top: 10px;
+    }
+
+    .contact-info a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .contact-info a:hover {
+        text-decoration: underline;
+    }
+
+    </style>
+
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">Westbrook Power Sports</div>
+        <div class="menu-toggle" aria-label="Toggle navigation">&#9776;</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#rentals">Rentals</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+    <div class="hero">
+
+        <video src="media/ski.mp4" autoplay loop muted playsinline="playsinline" poster="media/ski_poster.jpg">
+            Your browser does not support the video tag.
+        </video>
+        
+        <div class="hero-overlay">
+            <h1>Welcome to Westbrook Power Sports</h1>
+            <p>Connecticut's #1 Source for Jet Ski & Jet Boat Service</p>
+            <a href="tel:+1234567890" class="call-now-button">Call Now</a>
+        </div>
+        </div>
+
+    <div class="services" id="services">
+        <h2>Services</h2>
+        <div class="service-container">
+            <div class="service-card">
+                <img src="media/icons/jetski.png" alt="Jet Ski Watercraft Services">
+                <h3>Watercraft</h3>
+                <p>We offer top-notch watercraft services.</p>
+            </div>
+            <div class="service-card">
+                <img src="media/icons/snowmobile.png" alt="Snowmobile Repair Services">
+                <h3>Snowmobiles</h3>
+                <p>Expert snowmobile repair and maintenance.</p>
+            </div>
+            <div class="service-card">
+                <img src="media/icons/moped.png" alt="Moped Services">
+                <h3>Mopeds</h3>
+                <p>Reliable moped services to keep you moving.</p>
+            </div>
+            <div class="service-card">
+                <img src="media/icons/snowblower.png" alt="Snowblower Maintenance">
+                <h3>Snowblowers</h3>
+                <p>Keep your snowblowers in top condition.</p>
+            </div>
+            <div class="service-card">
+                <img src="media/icons/generator.png" alt="Generator Repair Services">
+                <h3>Generators</h3>
+                <p>Professional generator repair services.</p>
+            </div>
+            <div class="service-card">
+                <img src="media/icons/lawnmower.png" alt="Lawn Mower Repair Services">
+                <h3>Lawn Mowers</h3>
+                <p>Lawnmower repair services.</p>
+            </div>
+        </div>
+    </div>
+    <div class="rentals" id="rentals">
+        <h2>Rentals</h2>
+        <div class="rental-description">
+            <p>Westbrook Power Sports offers the best jet ski rental experience in Connecticut. Whether you're looking to explore Long Island Sound, the scenic Connecticut River, or the charming towns of Westbrook, Old Saybrook, Clinton, or Old Lyme, our Sea-Doo GTI watercraft will provide an unforgettable ride. Let us be your gateway to adventure on the water!</p>
+        </div>
+        <div class="rental-card">
+            <h3>Rental Details & Pricing</h3>
+            <ul class="rental-pricing">
+                <li>2-Hour Rental: <strong>$160</strong></li>
+                <li>Full Day (8 Hours): <strong>$560</strong></li>
+                <li>Additional Hours: <strong>$80 per hour</strong> (after the initial 2 hours)</li>
+            </ul>
+            <div class="rental-cta">
+                <a href="tel:+1234567890" class="call-now-button">Call Now to Book</a>
+            </div>
+        </div>
+        <div class="rental-requirements">
+            <h3>Requirements to Rent</h3>
+            <ul>
+                <li><strong>Have Your Personal Watercraft License</strong></li>
+                <li>Pay a damage deposit - Refundable after the ski is returned.</li>
+                <li>Be over 18 years of age.</li>
+                <li>Sign a liability form.</li>
+            </ul>
+            <p><strong>Note:</strong> Rental rates do not include fuel.</p>
+            <p><strong>Discounts:</strong> Law enforcement and military personnel discounts available.</p>
+        </div>
+        <div class="faq-section" id="faq">
+            <h3>FAQ about our rentals</h3>
+            <div class="faq-item">
+                <button class="faq-question">Do I need a personal watercraft license? <span class="arrow">&#9662;</span></button>
+                <div class="faq-answer">
+                    <p>Yes, per State of Connecticut, you need to have a valid personal watercraft license to rent a jet ski.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Is there a damage deposit required? <span class="arrow">&#9662;</span></button>
+                <div class="faq-answer">
+                    <p>Yes, a refundable damage deposit is required when renting. It will be refunded after the ski is returned in good condition.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What are the age requirements to rent? <span class="arrow">&#9662;</span></button>
+                <div class="faq-answer">
+                    <p>You must be over 18 years of age to rent a jet ski.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Do I need to sign any forms? <span class="arrow">&#9662;</span></button>
+                <div class="faq-answer">
+                    <p>Yes, you must sign a liability form before renting.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Is fuel included in the rental rates? <span class="arrow">&#9662;</span></button>
+                <div class="faq-answer">
+                    <p>Rental rates do not include fuel. Fuel costs are extra.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Are there any discounts available? <span class="arrow">&#9662;</span></button>
+                <div class="faq-answer">
+                    <p>Yes, law enforcement and military personnel are eligible for discounts.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('open');
+                    }
+                });
+
+                faqItem.classList.toggle('open');
+            });
+        });
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const navbar = document.querySelector('.navbar');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            navbar.classList.toggle('active');
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+        const yearSpan = document.getElementById('year');
+        const currentYear = new Date().getFullYear();
+        yearSpan.textContent = currentYear;
+    });
+    </script>
+
+<footer>
+    <div class="footer-content">
+        <p>Westbrook Powersports &copy; <span id="year"></span></p>
+        <div class="social-media">
+            <a href="https://www.facebook.com" class="social-link">
+                <i class="fab fa-facebook-f"></i> Visit Us On Facebook!
+            </a>
+        </div>
+        <div class="contact-info">
+            <p>Email: <a href="mailto:Westbrookpower@yahoo.com">Westbrookpower@yahoo.com</a></p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
